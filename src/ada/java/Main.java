@@ -20,50 +20,71 @@ Una empresa tiene empleados gerentes y otros que no son gerentes.
 public class Main {
 
     public static void main(String[] args) {
-    Gerente gerente = new Gerente("Jose");
-    List<Empleado> empleados = new ArrayList<>(Arrays.asList(
-            new Empleado("ana"),
-            new Empleado("jim"),
-            new Empleado("karen")
-    ));
-    gerente.setEmpleados(empleados);
+        //Genero gerente y empleados
+        Gerente gerente = new Gerente("Jose");
+        List<Empleado> empleados = new ArrayList<>(Arrays.asList(
+                new Empleado("ana"),
+                new Empleado("jim"),
+                new Empleado("karen")
+        ));
+        gerente.setEmpleados(empleados);
 
-    List<Tarea> tareas = new ArrayList<>(Arrays.asList(
-            new Tarea(1),
-            new Tarea(2),
-            new Tarea(3),
-            new Tarea(4),
-            new Tarea(5),
-            new Tarea(6),
-            new Tarea(7)
-    ));
-    gerente.setTareasPendientes(tareas);
+        //Genero Tareas
+        List<Tarea> tareas = new ArrayList<>(Arrays.asList(
+                new Tarea(1),
+                new Tarea(2),
+                new Tarea(3),
+                new Tarea(4),
+                new Tarea(5),
+                new Tarea(6),
+                new Tarea(7)
+        ));
+        gerente.setTareasPendientes(tareas);
 
-    //Asigno Tareas al azar
-    while (gerente.getTareasPendientes().size()>0) {
-        Double i =  Math.floor(Math.random()*3);
-        gerente.asignar(gerente.getProximaTareaPendiente(),gerente.getEmpleados().get(i.intValue()));
-    }
-
-    //Para cada Empleado proceso las tareas
-    for (Empleado e : gerente.getEmpleados()){
-        while (e.getTareasPendientes().size()>0) {
-            e.ejecutar(e.getProximaTareaPendiente());
+        //Asigno Tareas al azar
+        while (gerente.getTareasPendientes().size()>0) {
+            Double i =  Math.floor(Math.random()*3);
+            gerente.asignar(gerente.getProximaTareaPendiente(),gerente.getEmpleados().get(i.intValue()));
         }
-    }
-    // Hago listado de tareas realizadas y sueldos
+
+        //Chequeo asignacion de Tareas
+/*
+        for (Empleado e : gerente.getEmpleados()){
+            System.out.println("Tareas pendientes del Empleado: " + e.getNombre());
+            gerente.mostrarTareas(e.getTareasPendientes());
+            System.out.println("Tareas ejecutadas: " + e.getTareasEjecutadas().size());
+            System.out.println("Sueldo a cobrar:" + e.calcularSalario());
+            System.out.println("-------------------------------------------");
+        }
+*/
+
+        //Para cada Empleado proceso las tareas
+        for (Empleado e : gerente.getEmpleados()){
+            while (e.getTareasPendientes().size()>0) {
+                e.ejecutar(e.getProximaTareaPendiente());
+            }
+        }
+
+        //Agrego unas tarea para que queden pendientes para testeo
+        gerente.agregarTareaPendiente(new Tarea(8));
+        gerente.agregarTareaPendiente(new Tarea(9));
+        gerente.agregarTareaPendiente(new Tarea(10));
+        gerente.asignar(gerente.getProximaTareaPendiente(), gerente.getEmpleados().get(0));
+
+        // Hago listado de tareas realizadas y sueldos
         System.out.println("Tareas asignadas del Gerente: " + gerente.getNombre());
         gerente.mostrarTareas(gerente.getTareasAsignadas());
-        System.out.println("Sueldo a cobrar:" + gerente.calcularSalario());
         System.out.println("Tareas pendientes: " + gerente.getTareasPendientes().size());
+        System.out.println("Sueldo a cobrar:" + gerente.calcularSalario());
         System.out.println("-------------------------------------------");
 
-    for (Empleado e : gerente.getEmpleados()){
-        System.out.println("Tareas ejecutadas del Empleado: " + e.getNombre());
-        gerente.mostrarTareas(e.getTareasEjecutadas());
-        System.out.println("Tareas pendientes: " + e.getTareasPendientes().size());
-        System.out.println("Sueldo a cobrar:" + e.calcularSalario());
-        System.out.println("-------------------------------------------");
-    }
+
+        for (Empleado e : gerente.getEmpleados()){
+            System.out.println("Tareas ejecutadas del Empleado: " + e.getNombre());
+            gerente.mostrarTareas(e.getTareasEjecutadas());
+            System.out.println("Tareas pendientes: " + e.getTareasPendientes().size());
+            System.out.println("Sueldo a cobrar:" + e.calcularSalario());
+            System.out.println("-------------------------------------------");
+        }
     }
 }

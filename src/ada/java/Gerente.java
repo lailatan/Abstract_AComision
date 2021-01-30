@@ -10,6 +10,7 @@ public class Gerente extends Persona{
     public Gerente(String nombre) {
         super(nombre);
         tareasAsignadas = new ArrayList<>();
+        empleados = new ArrayList<>();
     }
 
     public List<Tarea> getTareasAsignadas() {
